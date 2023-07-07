@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Form</title>
+        <style>
+            *{
+                box-sizing: border-box;
+                margin: 0;
+                color: rgb(228, 188, 188);
+                border-color: rgb(243, 80, 80);
+                font-size: 18px;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+            body{
+                height: 150vh;
+                /* background-image: url('https://images.pexels.com/photos/4722577/pexels-photo-4722577.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); */
+                background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRySXg-Gvc3cxJ8AyRtJU6CBVIpAQcsIcfy-Q&usqp=CAU');
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            img{
+                max-width: 100%;
+                display: block;
+            }
+            form table, .table{
+                width: 600px;
+                margin: 30px auto;
+                border-collapse: collapse;
+                background-color:  rgba(42, 11, 11, 0.449);
+                backdrop-filter: blur(10px);
+                box-shadow: 0px 0px 5px 2px rgba(243, 116, 116, 0.744);;
+            }
+            form table input , .table{
+                background-color: transparent;
+                outline: none;
+                border: 2px solid;
+                padding: 5px 10px;
+            }
+            .table tr th{
+                padding: 10px;
+            }
+            form table td , .table{
+                text-align: center;
+                padding: 10px;
+            }
+            .table{
+                width: 80%;
+                box-shadow: 0px 0px 5px 2px rgba(252, 95, 95, 0.744);;
+            }
+            form table,form table input, .table, .table th, .table td{
+                border: 1px solid  rgb(243, 80, 80);
+            }
+            .table tr td img{
+                width: 100%;
+                height: 150px;
+                object-fit: cover;
+                object-position: center;
+            }
+        </style>
+    </head>
+    <body>
+        <form method="post" action="/insertData" enctype="multipart/form-data">
+            <input type="hidden" name="editid" value="<%= single.id %>"/>
+            <table>
+                <tr>
+                    <td>Title</td>
+                    <td><input type="text" value="<%= single.title %>" name="title"></td>
+                </tr>
+                <tr>
+                    <td>Discription</td>
+                    <td><input type="text"  value="<%= single.discription %>" name="discription"></td>
+                </tr>
+                <tr>
+                    <td>File Upload</td>
+                    <td>
+                        <input type="file" name="poster">
+                        <% if(single) { %>
+                                <img src="<%= single.poster %>"/>
+                        <% } %>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td> 
+                        <% if(!single) { %>
+                            <input type="submit">
+                        <% } else { %>
+                            <input type="submit" value="Edit">
+                        <% } %>
+                    </td>
+                </tr>
+            </table>
+        </form><br><br>
+
+        <table class="table">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Discription</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+
+            <% user.map((val,i)=>{ 
+                    const {id,title,discription,poster} = val;
+                    i++;
+                %>
+                <tr>
+                    <td><%= i %></td>
+                    <td><%= title %></td>
+                    <td><%= discription %></td>
+                    <td>
+                        <img src="<%= poster  %>"/>
+                    </td>
+                    <td>
+                        <a href="/deleteData?id=<%= id %>">Delete</a> ||
+                        <a href="/editData?id=<%= id %>">Edit</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </table>
+    </body>
+</html>
+
+
